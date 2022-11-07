@@ -29,7 +29,7 @@ const createTransporter = async () => {
       type: "OAuth2",
       user: EMAIL,
       accessToken:
-        "ya29.a0AeTM1icCVnL7U2ZmjKzRwaCiCPzc51E1o35Hpdy8veTVefY4xVY04Nd5eKNdva5kSc4lbi7a2lmF1lr01hgvPz4uPjoM4nfCGF7OMY5OXBfmpZXZihQCBiBJa1BxOQQm2WtOi5oVsRyqo2N8o9JW4f8ZFUgmaCgYKAR4SARASFQHWtWOmArWfW6oNqYZ9mOurrM5NOg0163",
+        "",
       clientId: CLIENT_ID,
       clientSecret: CLIENT_SECRET,
       refreshToken: REFRESH_TOKEN,
@@ -58,7 +58,7 @@ module.exports = async (to, subject, text) => {
 
 const EMAIL = "kctcanteen@gmail.com";
 const REFRESH_TOKEN =
-  "1//04yir36dVuNrMCgYIARAAGAQSNwF-L9Irkky8CVX0hqAKU-x45qWT1mQeC-SozJxM37fcNdpdXdnEuo0IKzKqDcok7tRWib6y2nE";
-const CLIENT_SECRET = "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";
+  "";
+const CLIENT_SECRET = "";
 const CLIENT_ID =
-  "582972806821-thck7sk99kh1r2sbctaoaruiag1t5ns8.apps.googleusercontent.com";
+  "";
