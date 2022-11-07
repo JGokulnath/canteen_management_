@@ -3,12 +3,10 @@ const MongoClient = mongodb.MongoClient;
 
 let _db;
 const mongoConnect = (callback) => {
-  MongoClient.connect(
-    "mongodb+srv://Roopan:Roopan@cluster0.x531j.mongodb.net/?retryWrites=true&w=majority"
-  )
+  MongoClient.connect("mongodb://127.0.0.1:27017")
     .then((client) => {
       console.log("Connected");
-      _db = client.db("canteeen");
+      _db = client.db("canteen");
       callback();
     })
     .catch((err) => {

@@ -11,10 +11,19 @@
   "license": "ISC",
   "dependencies": {
     "cors": "^2.8.5",
+    "crypto": "^1.0.1",
     "express": "^4.18.1",
+    "googleapis": "^108.0.1",
     "jsonwebtoken": "^8.5.1",
     "mongodb": "^4.8.1",
     "mongoose": "^6.5.0",
-    "nodemon": "^2.0.19"
+    "netlify-lambda": "^2.0.15",
+    "nodejs-nodemailer-outlook": "^1.2.4",
+    "nodemailer": "^6.8.0",
+    "nodemon": "^2.0.19",
+    "serverless-http": "^3.0.2"
+  },
+  "devDependencies": {
+    "dotenv": "^16.0.3"
   }
 }

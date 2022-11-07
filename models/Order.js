@@ -1,5 +1,5 @@
 const { ObjectId } = require("mongodb");
-
+const Product = require("../models/Product");
 const getDb = require("../utils/database").getDb;
 class Order {
   constructor(userid, products) {
@@ -10,6 +10,10 @@ class Order {
   placeOrder() {
     var db = getDb();
     var orders = db.collection("orders");
+    // products = [{"product":"Snack4","quantity":3} ]
+    [...this.products].map((prod) => {
+      const existingQty = Product.getProductById(prod.product);
+    });
     return orders
       .insertOne({ ...this, orderDate: new Date() })
       .then((res) => res)
@@ -20,6 +24,7 @@ class Order {
   static getAllOrders() {
     var db = getDb();
     var orders = db.collection("orders");
+
     return orders
       .find()
       .toArray()
