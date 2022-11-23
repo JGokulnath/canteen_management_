@@ -1,8 +1,8 @@
-const { response } = require("express");
 const express = require("express");
 const adminControllers = require("../controllers/admin");
 const verifyToken = require("../middleware/verifyToken");
 const Product = require("../models/Product");
+const upload = require("../controllers/uploadFiles");
 const router = express.Router();
 const { placeOrder } = require("../controllers/placeOrder");
 //Sample Message
@@ -16,9 +16,14 @@ router.post("/welcome", (req, res, next) => {
     ],
   });
 });
+//IMAGE
+//Upload image
+router.post("/post-image", upload.uploadFiles);
 //PRODUCT
 //Add new product
 router.post("/add-product", verifyToken, adminControllers.postProduct);
+//Edit product
+router.post("/edit-product", verifyToken, adminControllers.editProduct);
 //Get products
 router.get("/products", adminControllers.fetchAllProducts);
 //Get product details by ID
@@ -31,7 +36,15 @@ router.post("/product/:id", (req, res, next) => {
     else return res.status(204).json({ product: null });
   });
 });
-
+//MENU
+//Get Menus
+router.get("/menu", adminControllers.getMenu);
+//Add new menu
+router.post("/add-menu", verifyToken, adminControllers.addMenu);
+//Edit menu
+router.post("/edit-menu", verifyToken, adminControllers.editMenu);
+//Delete menu
+router.post("/delete-menu", verifyToken, adminControllers.deleteMenu);
 //ORDER
 //Place order
 router.post("/place-order", verifyToken, placeOrder);

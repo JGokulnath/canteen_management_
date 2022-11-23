@@ -1,26 +1,49 @@
+// getMenu pending line 75
 const Product = require("../models/Product");
 const Order = require("../models/Order");
 const User = require("../models/User");
+const Menu = require("../models/Menu");
 const Token = require("../models/Token");
 const jwt = require("jsonwebtoken");
 const sendEmail = require("../utils/sendEmail");
-const { response } = require("express");
 exports.postProduct = (req, res, next) => {
   const title = req.body.title;
   const price = req.body.price;
   const desc = req.body.desc;
   const imageUrl = req.body.imageUrl;
+  const quantity = req.body.quantity;
   if (!title || parseInt(price) <= 0 || !desc || !imageUrl)
     return res.status(500).json({ error: "err in fields" });
-  const product = new Product(title, price, desc, imageUrl);
+  const product = new Product(title, price, desc, imageUrl, quantity);
   product
     .save()
     .then(() => {
-      return res.json({ message: "product added" });
+      return res.status(201).json({ message: "product added" });
     })
     .catch((err) => {
       return res.status(500).json({ error: "err" });
     });
+};
+exports.editProduct = async (req, res, next) => {
+  const title = req.body.title;
+  const price = req.body.price;
+  const desc = req.body.desc;
+  const imageUrl = req.body.imageUrl;
+  const quantity = req.body.quantity;
+  let product = {
+    _id: title,
+    price,
+    desc,
+    imageUrl,
+    quantity,
+  };
+  try {
+    const response = await Product.updateProduct(product);
+    if (response.modifiedCount) res.status(200).json(product);
+    else res.status(200).json({ product: "No product changed" });
+  } catch (err) {
+    res.status(500).json({ err: "Server Err" });
+  }
 };
 exports.fetchAllProducts = (req, res, next) => {
   Product.fetchAll()
@@ -48,7 +71,52 @@ exports.placeOrder = (req, res, next) => {
       return res.status(500).json({ error: "Err" });
     });
 };
+exports.getMenu = async (req, res, next) => {
+  try {
+    const menus = await Menu.fetchAll();
 
+    return res.status(200).json(menus);
+  } catch (err) {
+    console.log(err);
+    return res.status(500).json({ err: "Error reaching servers" });
+  }
+};
+exports.addMenu = async (req, res, next) => {
+  const name = req.body.name;
+  const timing = req.body.timing;
+  const products = req.body.products;
+  const menuItem = new Menu(name, timing, products);
+  try {
+    const response = await menuItem.save();
+    return res
+      .status(201)
+      .json({ _id: response.insertedId, name, timing, products });
+  } catch (err) {
+    return res.status(500).json({ err: "Error in adding menu" });
+  }
+};
+exports.editMenu = async (req, res, next) => {
+  const item = req.body.menuItem;
+  //menuItem - { _id:"xxx", name: "Lunch", timing:[12,16], products: ["Snack3","Snack4"] }
+  try {
+    const response = await Menu.edit(item);
+    if (response.acknowledged) return res.status(200).json({ item });
+    else throw "err";
+  } catch (err) {
+    return res.status(500).json({ err: "Error in editing menu" });
+  }
+};
+exports.deleteMenu = async (req, res, next) => {
+  const id = req.body.menuId;
+  try {
+    const response = await Menu.delete(id);
+    if (response.deletedCount)
+      return res.status(200).json({ msg: "Deleted Successfully" });
+    else return res.status(200).json({ msg: "No menu found" });
+  } catch (err) {
+    return res.status(500).json({ err: "Error in deleting menu" });
+  }
+};
 exports.fetchUserOrders = (req, res, next) => {
   const userid = req.body.username;
   if (!userid) return res.status(500).json({ error: "Err No userid" });

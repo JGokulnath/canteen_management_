@@ -4,9 +4,7 @@ const verifyToken = (req, res, next) => {
   const token = req.headers["authorization"];
   const getUserDetails = async (userId) => {
     try {
-      console.log("User ID " + JSON.stringify(userId));
       const response = await User.getUserStatus(userId);
-      console.log(response);
       return response;
     } catch (err) {
       throw "err";

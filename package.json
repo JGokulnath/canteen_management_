@@ -17,6 +17,8 @@
     "jsonwebtoken": "^8.5.1",
     "mongodb": "^4.8.1",
     "mongoose": "^6.5.0",
+    "multer": "^1.4.4",
+    "multer-gridfs-storage": "^5.0.2",
     "netlify-lambda": "^2.0.15",
     "nodejs-nodemailer-outlook": "^1.2.4",
     "nodemailer": "^6.8.0",
